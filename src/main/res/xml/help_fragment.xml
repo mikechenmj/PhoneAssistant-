@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="camera_function_tip_key"
+        android:persistent="false"
+        android:summary="@string/camera_function_tip_summary"
+        android:title="@string/camera_function_tip_title" />
+
+    <Preference
+        android:key="dialer_function_tip_key"
+        android:persistent="false"
+        android:summary="@string/dialer_function_tip_summary"
+        android:title="@string/dialer_function_tip_title" />
+
+    <Preference
+        android:key="launcher_function_tip_key"
+        android:persistent="false"
+        android:summary="@string/launcher_function_tip_summary"
+        android:title="@string/launcher_function_tip_title" />
+
+    <Preference
+        android:key="news_tuling_tip_key"
+        android:persistent="false"
+        android:summary="@string/news_tuling_tip_summary"
+        android:title="@string/news_tuling_tip_title" />
+
+    <Preference
+        android:key="cook_tuling_tip_key"
+        android:persistent="false"
+        android:summary="@string/cook_tuling_tip_summary"
+        android:title="@string/cook_tuling_tip_title" />
+
+    <Preference
+        android:key="weather_tuling_tip_key"
+        android:persistent="false"
+        android:summary="@string/weather_tuling_tip_summary"
+        android:title="@string/weather_tuling_tip_title" />
+
+    <Preference
+        android:key="travel_tuling_tip_key"
+        android:persistent="false"
+        android:summary="@string/travel_tuling_tip_summary"
+        android:title="@string/travel_tuling_tip_title" />
+
+</PreferenceScreen>

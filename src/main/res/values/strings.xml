@@ -1,0 +1,90 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">智能小精灵</string>
+    <string name="open_url_tip">点击打开链接</string>
+    <string name="internet_not_connected">网络未连接</string>
+    <string name="news_title">新闻</string>
+    <string name="open_news_tip">点击打开新闻列表</string>
+    <string name="cook_title">菜谱</string>
+    <string name="open_cook_tip">点击打开菜谱列表</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_help">帮助</string>
+
+    <string name="dialer_tip">
+        打电话给<xliff:g id="name">%1$s</xliff:g>:<xliff:g id="nmuber">%2$s</xliff:g>
+    </string>
+
+    <string name="voice_talker_name">发音人</string>
+
+    <string name="def_voice_talker_value">xiaoyan</string>
+    <string name="voice_speed_dialog_title">请输入语速:(0-100)</string>
+    <string name="voice_speed_def_value">50</string>
+    <string name="voice_speed_summary">默认值：50</string>
+    <string name="voice_speed_title">语速</string>
+    <string name="voice_pitch_dialog_title">请输入音调(0-100)</string>
+    <string name="voice_pitch_def_value">50</string>
+    <string name="voice_pitch_summary">默认值：50</string>
+    <string name="voice_pitch_title">音调</string>
+    <string name="voice_volume_dalog_title">请输入音量(0-100)</string>
+    <string name="voice_volume_def_value">50</string>
+    <string name="voice_volume_summary">默认值：50</string>
+    <string name="voice_volume_title">音量</string>
+    <string name="settings_value_out_of_limit_tip">超出有效值范围</string>
+    <string name="settings_value_format_wrong_tip">只能输入数字哦</string>
+    <string name="without_permission_tip">未授予指定权限，程序退出</string>
+    <string name="camera_function_tip_title">如何拍照</string>
+    <string name="camera_function_tip_summary">\"启动相机\"</string>
+    <string name="dialer_function_tip_title">如何拨打电话</string>
+    <string name="dialer_function_tip_summary">\"打电话给爸爸\"</string>
+    <string name="news_tuling_tip_title">查看新闻</string>
+    <string name="news_tuling_tip_summary">\"今天的新闻\"</string>
+    <string name="cook_tuling_tip_title">如何查看菜谱</string>
+    <string name="cook_tuling_tip_summary">\"毛血旺\"</string>
+    <string name="weather_tuling_tip_title">如何查看天气</string>
+    <string name="weather_tuling_tip_summary">\"今天的天气\"</string>
+    <string name="travel_tuling_tip_title">\"如何查询出行信息\"</string>
+    <string name="travel_tuling_tip_summary">\"北京到广州\"</string>
+    <string name="launcher_function_tip_title">如何打开应用</string>
+    <string name="launcher_function_tip_summary">\"打开设置\"</string>
+
+    <string-array name="voicer_cloud_entries">
+        <item>小燕—女青、中英、普通话</item>
+        <item>小宇—男青、中英、普通话</item>
+        <item>凯瑟琳—女青、英</item>
+        <item>亨利—男青、英</item>
+        <item>玛丽—女青、英</item>
+        <item>小研—女青、中英、普通话</item>
+        <item>小琪—女青、中英、普通话</item>
+        <item>小峰—男青、中英、普通话</item>
+        <item>小梅—女青、中英、粤语</item>
+        <item>小莉—女青、中英、台湾普通话</item>
+        <item>小蓉—女青、中、四川话</item>
+        <item>小芸—女青、中、东北话</item>
+        <item>小坤—男青、中、河南话</item>
+        <item>小强—男青、中、湖南话</item>
+        <item>小莹—女青、中、陕西话</item>
+        <item>小新—男童、中、普通话</item>
+        <item>楠楠—女童、中、普通话</item>
+        <item>老孙—男老、中、普通话</item>
+    </string-array>
+
+    <string-array name="voicer_cloud_values">
+        <item>xiaoyan</item>
+        <item>xiaoyu</item>
+        <item>catherine</item>
+        <item>henry</item>
+        <item>vimary</item>
+        <item>vixy</item>
+        <item>xiaoqi</item>
+        <item>vixf</item>
+        <item>xiaomei</item>
+        <item>xiaolin</item>
+        <item>xiaorong</item>
+        <item>xiaoqian</item>
+        <item>xiaokun</item>
+        <item>xiaoqiang</item>
+        <item>vixying</item>
+        <item>xiaoxin</item>
+        <item>nannan</item>
+        <item>vils</item>
+    </string-array>
+</resources>

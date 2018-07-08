@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <ListPreference
+    android:key="voice_talker"
+    android:title="@string/voice_talker_name"
+    android:defaultValue="@string/def_voice_talker_value"
+    android:entries="@array/voicer_cloud_entries"
+    android:entryValues="@array/voicer_cloud_values"
+    />
+
+    <EditTextPreference
+        android:dialogTitle="@string/voice_speed_dialog_title"
+        android:key="speed_preference"
+        android:defaultValue="@string/voice_speed_def_value"
+        android:summary="@string/voice_speed_summary"
+        android:title="@string/voice_speed_title" />
+    <EditTextPreference
+        android:dialogTitle="@string/voice_pitch_dialog_title"
+        android:key="pitch_preference"
+        android:defaultValue="@string/voice_pitch_def_value"
+        android:summary="@string/voice_pitch_summary"
+        android:title="@string/voice_pitch_title" />
+    <EditTextPreference
+        android:dialogTitle="@string/voice_volume_dalog_title"
+        android:key="volume_preference"
+        android:defaultValue="@string/voice_volume_def_value"
+        android:summary="@string/voice_volume_summary"
+        android:title="@string/voice_volume_title" />
+</PreferenceScreen>
