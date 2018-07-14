@@ -26,6 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:theme="@style/AppTheme.CharList"
             android:name="com.chenmj.phoneassistant.activity.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -40,6 +41,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/AppTheme.CharDetailList"
             android:name="com.chenmj.phoneassistant.activity.CharDetailItemActivity"
             android:screenOrientation="portrait" />
     </application>
