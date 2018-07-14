@@ -43,7 +43,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.chenmj.phoneassistant.R;
 import com.chenmj.phoneassistant.bean.ChatDetailItem;
 import com.chenmj.phoneassistant.bean.IntentChatTextInfo;
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onEnd() {
                     Log.e("MCJ", "onEnd");
-                    Glide.with(MainActivity.this).load(R.drawable.ic_perm_group_microphone).into(mVoiceRecognize);
+                    mVoiceRecognize.setImageResource(R.drawable.ic_perm_group_microphone);
                 }
 
                 private Bitmap getVolumeChangedBitmap(float ratio) {
@@ -180,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        Glide.with(this).load(R.drawable.ic_perm_group_microphone).into(mVoiceRecognize);
+        mVoiceRecognize.setImageResource(R.drawable.ic_perm_group_microphone);
     }
 
     private void init() {
@@ -282,10 +281,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mInputCardView = (CardView) findViewById(R.id.input_card);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.appBar);
         if (mIsEditTextInputMode) {
-            Glide.with(this).load(R.drawable.ic_perm_group_microphone).into(mInputSwitch);
+            mInputSwitch.setImageResource(R.drawable.ic_perm_group_microphone);
             mVoiceRecognize.setVisibility(View.INVISIBLE);
         } else {
-            Glide.with(this).load(R.drawable.ic_send).into(mInputSwitch);
+            mInputSwitch.setImageResource(R.drawable.ic_send);
             mInputContainer.setVisibility(View.INVISIBLE);
         }
     }
@@ -520,7 +519,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     - mInputContainer.getWidth() / 2;
         }
         if (mIsEditTextInputMode) {
-            Glide.with(this).load(R.drawable.ic_send).into(mInputSwitch);
+            mInputSwitch.setImageResource(R.drawable.ic_send);
             ObjectAnimator inputContainerAnimator = ObjectAnimator.ofFloat(mInputContainer,
                     "translationX", mInputContainerTranslationX);
 
@@ -552,7 +551,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         } else {
-            Glide.with(this).load(R.drawable.ic_perm_group_microphone).into(mInputSwitch);
+            mInputSwitch.setImageResource(R.drawable.ic_perm_group_microphone);
             ObjectAnimator voiceRecognizeAnimator = ObjectAnimator.ofFloat(mVoiceRecognize,
                     "alpha", 1f, 0f);
             voiceRecognizeAnimator.setDuration(200);
