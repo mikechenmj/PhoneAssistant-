@@ -1,6 +1,10 @@
 package com.chenmj.phoneassistant.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -10,6 +14,8 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.transition.TransitionSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +27,10 @@ import com.chenmj.phoneassistant.bean.SynthesizerStateTextInfo;
 import com.chenmj.phoneassistant.bean.TextChatInfo;
 import com.chenmj.phoneassistant.bean.TypeChatInfo;
 import com.chenmj.phoneassistant.bean.UrlChatTextInfo;
+import com.chenmj.phoneassistant.view.TransitionAnimationView;
 import com.chenmj.phoneassistant.xunfei.SpeechSynthesizerController;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
@@ -75,33 +83,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = holder.getAdapterPosition();
-                    boolean isSameItem = position == mPressPosition;
-                    mPressPosition = position;
-                    String text = ((TextView)v.findViewById(R.id.chat_text)).getText().toString();
-                    if (!TextUtils.isEmpty(text)) {
-                        SpeechSynthesizerController speechSynthesizerController = SpeechSynthesizerController.getInstance();
-                        if (!isSameItem) {
-                            speechSynthesizerController.startSpeech(text);
-                            return;
-                        }
-                        if (!speechSynthesizerController.isSpeeching()) {
-                                speechSynthesizerController.startSpeech(text);
-                        }else {
-                            if (speechSynthesizerController.isSpeakPaused()) {
-                                speechSynthesizerController.resumeSpeech();
-                            }else {
-                                speechSynthesizerController.pauseSpeech();
-                            }
-                        }
-                    }
+                    handleItemPerform(v, holder.getAdapterPosition());
                 }
             });
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     mPressPosition = holder.getAdapterPosition();
-                    String text = ((TextView)v.findViewById(R.id.chat_text)).getText().toString();
+                    String text = ((TextView) v.findViewById(R.id.chat_text)).getText().toString();
                     if (!TextUtils.isEmpty(text)) {
                         SpeechSynthesizerController speechSynthesizerController = SpeechSynthesizerController.getInstance();
                         speechSynthesizerController.startSpeech(text);
@@ -114,7 +103,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         int type = getItemViewType(position);
         TextChatInfo textChatInfo = (TextChatInfo) mChatList.get(position);
         TextView textView = holder.root.findViewById(R.id.chat_text);
@@ -131,16 +120,43 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
                     0, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             textView.setMovementMethod(LinkMovementMethod.getInstance());
             content = spannableString;
-        }else if (type == TypeChatInfo.CHAT_INTENT_TYPE_RECEIVE) {
+        } else if (type == TypeChatInfo.CHAT_INTENT_TYPE_RECEIVE) {
             final IntentChatTextInfo intentChatInfo = (IntentChatTextInfo) textChatInfo;
             content = intentChatInfo.getText();
             SpannableString spannableString = new SpannableString(content);
             spannableString.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    mContext.startActivity(intentChatInfo.getIntent());
+                    Intent intent = intentChatInfo.getIntent();
+
+                    Rect rect = new Rect();
+                    holder.root.getGlobalVisibleRect(rect);
+                    Log.i("MCJ", "rect: " + rect);
+
+                    Bitmap bitmap = null;
+                    if (mContext instanceof Activity) {
+                        View rootContent = ((Activity) mContext).findViewById(android.R.id.content);
+                        rootContent.setDrawingCacheEnabled(true);
+                        bitmap = rootContent.getDrawingCache();
+                        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                        rootContent.setDrawingCacheEnabled(false);
+                    }
+
+                    boolean shouldPerformTransitionAnimation = !rect.isEmpty() && bitmap != null;
+
+                    if (shouldPerformTransitionAnimation) {
+                        intent.setSourceBounds(rect);
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                        byte[] bitmapData = byteArrayOutputStream.toByteArray();
+                        intent.putExtra(TransitionAnimationView.EXTRA_TRANSITION_BITMAP, bitmapData);
+                    }
+                    mContext.startActivity(intent);
+                    if (shouldPerformTransitionAnimation) {
+                        ((Activity) mContext).overridePendingTransition(0, 0);
+                    }
                 }
-            },0, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }, 0, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannableString.setSpan(new ForegroundColorSpan(textView.getCurrentTextColor()),
                     0, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             textView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -155,7 +171,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         if (type != TypeChatInfo.CHAT_TYPE_SEND) {
             SynthesizerStateTextInfo synthesizerStateTextInfo = (SynthesizerStateTextInfo) textChatInfo;
             if (!synthesizerStateTextInfo.isHasSynthesized()) {
-                holder.root.performClick();
+                handleItemPerform(holder.root, holder.getAdapterPosition());
                 synthesizerStateTextInfo.setHasSynthesized(true);
             }
         }
@@ -166,4 +182,25 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         return mChatList.size();
     }
 
+    private void handleItemPerform(View v, int position) {
+        boolean isSameItem = position == mPressPosition;
+        mPressPosition = position;
+        String text = ((TextView) v.findViewById(R.id.chat_text)).getText().toString();
+        if (!TextUtils.isEmpty(text)) {
+            SpeechSynthesizerController speechSynthesizerController = SpeechSynthesizerController.getInstance();
+            if (!isSameItem) {
+                speechSynthesizerController.startSpeech(text);
+                return;
+            }
+            if (!speechSynthesizerController.isSpeeching()) {
+                speechSynthesizerController.startSpeech(text);
+            } else {
+                if (speechSynthesizerController.isSpeakPaused()) {
+                    speechSynthesizerController.resumeSpeech();
+                } else {
+                    speechSynthesizerController.pauseSpeech();
+                }
+            }
+        }
+    }
 }

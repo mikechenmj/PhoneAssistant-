@@ -135,7 +135,7 @@ public class SpeechRecognizerController {
             if (error != null) {
                 Log.e("MCJ", "onLexiconUpdated: " + error.toString());
             } else {
-                Log.e("MCJ", "onLexiconUpdated success");
+                Log.i("MCJ", "onLexiconUpdated success");
             }
         }
     };
@@ -146,7 +146,7 @@ public class SpeechRecognizerController {
         mOnRecognizerListener = listener;
         mIatResults.clear();
         int ret = mIat.startListening(mRecognizerListener);
-        Log.e("MCJ", "ret: " + ret);
+        Log.i("MCJ", "ret: " + ret);
     }
     public void stopRecognize() {
         mIat.stopListening();

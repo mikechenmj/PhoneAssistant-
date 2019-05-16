@@ -20,6 +20,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.os.Build;
+import android.os.Handler;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -38,6 +42,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -70,7 +75,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, HelpFragment.MessageSender {
 
     private SpeechRecognizerController mSpeechRecognizerController;
     private AssistantFunctionController mAssistantFunctionController;
@@ -126,12 +131,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     mRatio = ALPHA * mRatio + (1 - ALPHA) * ratio;
                     mVoiceRecognize.setImageBitmap(getVolumeChangedBitmap(mRatio));
-                    Log.e("MCJ", "onVolumeChanged");
+                    Log.i("MCJ", "onVolumeChanged");
                 }
 
                 @Override
                 public void onEnd() {
-                    Log.e("MCJ", "onEnd");
+                    Log.i("MCJ", "onEnd");
                     mVoiceRecognize.setImageResource(R.drawable.ic_perm_group_microphone);
                 }
 
@@ -160,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         init();
         CheckNetwork.checkNetwork(this);
+
         /**
          * use android:windowFullscreen instead
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -297,7 +303,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.fragment_content, new HelpFragment()).commit();
-
         mDrawerLayout.openDrawer(Gravity.START);
     }
 
@@ -441,6 +446,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .append(URLEncoder.encode(contentStr))
                 .append(Constant.USER_ID)
                 .toString();
+        Log.i("MCJ", "postUrl: " + postUrl);
         ChatInfoAsyncTask ChatInfoAsyncTask = (ChatInfoAsyncTask) new ChatInfoAsyncTask(postUrl, mHatHttpDataListener, mChatInfoAsyncTasks).execute();
         mChatInfoAsyncTasks.add(ChatInfoAsyncTask);
     }
@@ -584,4 +590,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         mIsEditTextInputMode = !mIsEditTextInputMode;
     }
+
+    @Override
+    public void sendMessage(String s) {
+        pullMessage(s);
+    }
 }
+
+
+

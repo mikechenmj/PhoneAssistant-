@@ -69,8 +69,8 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 @Override
                 public void run() {
                     preference.setSummary(((ListPreference) preference).getEntry());
-                    Log.e("MCJ", "entry: " + entry);
-                    Log.e("MCJ", "value: " + value);
+                    Log.i("MCJ", "entry: " + entry);
+                    Log.i("MCJ", "value: " + value);
                 }
             });
         }else {

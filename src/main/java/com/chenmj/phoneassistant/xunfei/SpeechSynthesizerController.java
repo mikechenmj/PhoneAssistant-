@@ -59,19 +59,19 @@ public class SpeechSynthesizerController {
 
         @Override
         public void onSpeakBegin() {
-            Log.e("MCJ", "onSpeakBegin");
+            Log.i("MCJ", "onSpeakBegin");
             mIsSpeakPaused = false;
         }
 
         @Override
         public void onSpeakPaused() {
-            Log.e("MCJ", "onSpeakPaused");
+            Log.i("MCJ", "onSpeakPaused");
             mIsSpeakPaused = true;
         }
 
         @Override
         public void onSpeakResumed() {
-            Log.e("MCJ", "onSpeakResumed");
+            Log.i("MCJ", "onSpeakResumed");
             mIsSpeakPaused = false;
         }
 
@@ -88,7 +88,7 @@ public class SpeechSynthesizerController {
         @Override
         public void onCompleted(SpeechError error) {
             if (error == null) {
-                Log.e("MCJ", "onCompleted");
+                Log.i("MCJ", "onCompleted");
             } else {
                 Log.e("MCJ", "onCompleted:" + error.getPlainDescription(true));
             }

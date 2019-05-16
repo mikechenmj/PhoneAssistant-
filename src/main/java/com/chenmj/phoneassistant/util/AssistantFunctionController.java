@@ -160,12 +160,12 @@ public class AssistantFunctionController {
             intentChatTextInfos = new IntentChatTextInfo[length];
             for (int i = 0; i < length; i++) {
                 String number = numbers[i];
-                Log.e("MCJ", "number: " + number);
+                Log.i("MCJ", "number: " + number);
                 if (name.lastIndexOf("。") == name.length() - 1) {
                     name = name.substring(0, name.length() - 1);
                 }
                 String dialerTip = context.getString(R.string.dialer_tip, name, number);
-                Log.e("MCJ", "dialerTip: " + dialerTip);
+                Log.i("MCJ", "dialerTip: " + dialerTip);
                 intentChatTextInfos[i] = new IntentChatTextInfo(dialerTip, getDialerIntent(number), launcherImmediate);
                 intentChatTextInfos[i].setHasSynthesized(true);
             }
